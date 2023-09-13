@@ -1,152 +1,144 @@
-import { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { ActivityIndicator, DataTable } from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import styles from '../styles/styles';
 import { ScrollView } from 'react-native-gesture-handler';
 
+const Table = ({ details, roomId }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [toPayList, setToPayList] = useState({});
+  const [toBePaidList, setToBePaidList] = useState({});
+  const [amount, setAmount] = useState(''); // Initialize amount as an empty string
+  const [notes, setNotes] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [pay, setPay] = useState(''); // Initialize pay as an empty string
+  const [receiver, setReceiver] = useState('');
 
-const Table = ({ details }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [toPayList, setToPayList] = useState({}); // Initialize toPayList as a state variable
-    const [toBePaidList, setToBePaidList] = useState({});
-    const [amount,setAmount] = useState(0);
-    useEffect(() => {
-        const temp = JSON.parse(details);
-        const updatedToPayList = temp.toPay.drakeswd;
-        const updatedToBePaidList = temp.toBePaid.drakeswd;
-        setToPayList(updatedToPayList); // Set the toPayList state variable
-        setToBePaidList(updatedToBePaidList)
-        setIsLoaded(true);
-    }, [details]); // Add details as a dependency
+  useEffect(() => {
+    try {
+      const temp = JSON.parse(details);
+      const updatedToPayList = temp.toPay.drakeswd;
+      const updatedToBePaidList = temp.toBePaid.drakeswd;
+      setToPayList(updatedToPayList);
+      setToBePaidList(updatedToBePaidList);
+      setIsLoaded(true);
+    } catch (error) {
+      console.error('Error parsing details:', error);
+    }
+  }, [details]);
 
-    return (
-      <ScrollView>  
-        <View style={styles.containerBox}>
+  async function PayUp() {
+    try {
+      const response = await fetch('https://payup-043m.onrender.com/payup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          roomId: roomId,
+          sender: 'drakeswd',
+          receiver: receiver,
+          amount: parseFloat(pay), // Parse pay as a float
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      } else {
+        console.log('Data sent successfully');
+        setModalVisible(false);
+        // You might want to update some state here to reflect the payment status
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  return (
+    <ScrollView>
+      <View style={styles.containerBox}>
         <Text> Split expense:</Text>
         <TextInput
           placeholder="Enter Split Amount"
+          keyboardType="numeric" // Set keyboardType to numeric
           autoCapitalize="none"
           autoCorrect={false}
-          onChangeText={(e) => {
-            setAmount(e);
-          }}
+          onChangeText={(text) => setAmount(text)} // Use onChangeText instead of onChange
           value={amount}
           style={styles.theBetterSearchBar}
         ></TextInput>
+
         <Text> Description of Expense:</Text>
         <TextInput
           placeholder="Enter Notes"
           autoCapitalize="none"
           autoCorrect={false}
-          onChangeText={(e) => {
-            setAmount(e);
-          }}
-          value={amount}
+          onChangeText={(text) => setNotes(text)} // Use onChangeText instead of onChange
+          value={notes}
           style={styles.theBetterSearchBar}
         ></TextInput>
+
         <TouchableOpacity
-        style={styles.greenButton}
-        onPress={() => {
-        }}
-      > 
-        <Text
-          style={{ color: "white", fontWeight: "bold", alignItems: "center" }}
+          style={styles.greenButton}
+          onPress={() => {
+            // You can add your logic here for generating the split
+          }}
         >
-          GENERATE SPLIT
-        </Text>
-      </TouchableOpacity>
+          <Text style={{ color: 'white', fontWeight: 'bold', alignItems: 'center' }}>
+            GENERATE SPLIT
+          </Text>
+        </TouchableOpacity>
       </View>
-        <View style={styles.containerBox}>
-            {isLoaded ? (
-                <View style={{}}>
-                    <Text style = {styles.headingText}>To Pay</Text>
-                    <DataTable style={styles.table}>
-                        <DataTable.Header style={styles.header}>
-                            <DataTable.Title style={styles.theBestText}>
-                            <Text style={styles.theBestText}>Pay</Text>
-                            </DataTable.Title>
-                            <DataTable.Title style = {{marginRight:100}} >
-                                <Text style={styles.leftText}>Amount</Text>
-                            </DataTable.Title>
-                        </DataTable.Header>
 
-                        {Object.keys(toPayList).length > 0 ? (
-                            Object.keys(toPayList).map((key, index) => (
-                                <View key={index} style={styles.rowContainer}>
-                                    <DataTable.Row style={styles.row}>
-                                        <DataTable.Cell>
-                                            <Text style={styles.cellText}>{key}</Text>
-                                        </DataTable.Cell>
-                                        <DataTable.Cell>
-                                            <Text style={styles.cellText}>{toPayList[key]}</Text>
-                                        </DataTable.Cell>
-                                    </DataTable.Row>
-                                    <TouchableOpacity
-                                        style={styles.payGreenButton}
-                                        onPress={() => {
-                                            // Handle button click
-                                        }}
-                                    >
-                                        <Text style={styles.buttonText}>Pay</Text>
-                                    </TouchableOpacity>
-
-                                </View>
-
-                            ))
-                        ) : (
-                            <View></View>
-                        )}
-                    </DataTable>
-                            <View style = {styles.breakSpace}></View>
-                    <Text style = {styles.headingText}>To Be Paid</Text>
-
-                    <DataTable style={styles.table}>
-                        <DataTable.Header style={styles.header}>
-                            <DataTable.Title>
-                            <Text style={styles.theBestText}>Username</Text>
-                            </DataTable.Title>
-                            <DataTable.Title style = {{marginRight:100}} >
-                                <Text style={styles.theBestText}>Amount</Text>
-                            </DataTable.Title>
-                        </DataTable.Header>
-
-                        {Object.keys(toBePaidList).length > 0 ? (
-                            Object.keys(toBePaidList).map((key, index) => (
-                                <View key={index} style={styles.rowContainer}>
-                                    <DataTable.Row style={styles.row}>
-                                        <DataTable.Cell>
-                                            <Text style={styles.cellText}>{key}</Text>
-                                        </DataTable.Cell>
-                                        <DataTable.Cell>
-                                            <Text style={styles.cellText}>{toPayList[key]}</Text>
-                                        </DataTable.Cell>
-                                    </DataTable.Row>
-                                    <TouchableOpacity
-                                        style={styles.ackBlueButton}
-                                        onPress={() => {
-                                            // Handle button click
-                                        }}
-                                    >
-                                        <Text style={styles.buttonText}>Ack</Text>
-                                    </TouchableOpacity>
-
-                                </View>
-
-                            ))
-                        ) : (
-                            <View></View>
-                        )}
-                    </DataTable>
-                </View>
-            ) : (
-                <View></View>
-            )}
-
-            {/* {//To Be Paid} */}
-            
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text> Enter Amount:</Text>
+            <TextInput
+              placeholder="Enter Amount"
+              keyboardType="numeric" // Set keyboardType to numeric
+              onChangeText={(text) => setPay(text)} // Use onChangeText instead of onChange
+              value={pay}
+              style={styles.theBetterSearchBar}
+            ></TextInput>
+            <TouchableOpacity style={styles.wideGreenButton} onPress={PayUp}>
+              <Text>PayUp!</Text>
+            </TouchableOpacity>
+          </View>
         </View>
+      </Modal>
+
+      {/* TO PAY */}
+      <View style={styles.containerBox}>
+        {isLoaded ? (
+          <View style={{}}>
+            <Text style={styles.headingText}>To Pay</Text>
+
+            <DataTable style={styles.table}>
+              {/* DataTable content */}
+            </DataTable>
+            <View style={styles.breakSpace}></View>
+
+            {/* TO BE PAID */}
+            <Text style={styles.headingText}>To Be Paid</Text>
+
+            <DataTable style={styles.table}>
+              {/* DataTable content */}
+            </DataTable>
+          </View>
+        ) : (
+          <View></View>
+        )}
+      </View>
     </ScrollView>
-    );
+  );
 };
 
 export default Table;

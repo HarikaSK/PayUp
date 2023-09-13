@@ -66,7 +66,7 @@ const Group = () => {
     <View>
        {isLoaded ? (<View style = {styles.containerCenter}>
       {/* <Text style={styles.textWithMargin}>This is the Group page, need to get roomId from Card to this so we can fetch the data of that room Id and display it here</Text> */}
-      <Table details={roomDeets}/>
+      <Table details={roomDeets} roomId={roomId}/>
     </View>) : (<View style = {styles.centerScreen}><ActivityIndicator/></View>)}
     </View>
     
