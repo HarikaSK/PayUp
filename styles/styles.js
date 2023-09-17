@@ -1,7 +1,11 @@
 const styles = {
     logoStyle: {
-        height: 35,
-        width: 35
+        height: 42,
+        width: 42
+    },
+    drawerStyle:{
+        height : 30,
+        width: 30
     },
     container: {
         marginTop: 10,
@@ -30,6 +34,16 @@ const styles = {
         fontSize: 70,
         fontStyle: "Times New Roman",
         fontWeight: 'bold'
+        
+    },
+    containerCenter2: {
+        
+        paddingVertical: 175,
+        textAlign: 'center',
+        fontSize: 70,
+        fontStyle: "Times New Roman",
+        fontWeight: 'bold',
+        backgroundColor:"white"
         
     },
     textContainer: {
@@ -84,6 +98,7 @@ const styles = {
         shadowOffset: { width: 0, height: 4 },
         elevation: 2,
     },
+    
     groupMemberListBox: {
         backgroundColor: 'white',
         borderRadius: 5,
@@ -92,8 +107,8 @@ const styles = {
         margin: 2,
         marginTop: 4,
         marginBottom: 4,
-        shadowOffset: { width: 0, height: 4 },
-        elevation: 2,
+        
+        
     },
     greenButton:{
         backgroundColor:'green',
@@ -230,7 +245,7 @@ const styles = {
         alignItems: 'center',
     },
     greenContainerBox:{
-        backgroundColor: 'green',
+        backgroundColor: '#87cefa',
         color:'white',
         borderRadius: 5,
         padding: 30,
@@ -244,7 +259,7 @@ const styles = {
         elevation: 2,
     },
     blueContainerBox:{
-        backgroundColor: '#0cc2f5',
+        backgroundColor: '#87cefa',
         color:'white',
         borderRadius: 5,
         padding: 40,
@@ -298,19 +313,40 @@ const styles = {
         fontSize: 14,
       },
       payGreenButton: {
-        backgroundColor: 'green', // Change to your desired button style
+        backgroundColor: '#8b0000', // Change to your desired button style
         paddingVertical: 8,
         paddingHorizontal: 16,
         borderRadius: 5,
       },
       ackBlueButton: {
-        backgroundColor: 'orange', // Change to your desired button style
+        backgroundColor: '#8b0000', // Change to your desired button style
         paddingVertical: 8,
         paddingHorizontal: 16,
         borderRadius: 5,
+        
+    
+      },
+      extraButton: {
+        backgroundColor:'#000080',
+        color: 'black',
+        fontWeight:'bold',
+        alignItems:'center',
+        borderRadius: 5,
+        padding: 10,
+        shadowColor: '#57595B',
+        margin: 10,
+        marginTop: 4,
+        marginBottom: 4,
+        paddingTop: 15,
+        paddingBottom: 15,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 2,
       },
       breakSpace:{
         margin:20
+      },
+      breakSpace2:{
+        margin:10
       },
       leftText:{
         color:"black", 
@@ -320,6 +356,37 @@ const styles = {
         color: 'white',
         fontWeight: 'bold',
       },
+      headingText_History: {
+        color: '#000080',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom:1,
+        textAlign: 'center'
+    },
+    container_History: {
+        marginTop: 10,
+        marginTop: 16,
+        paddingVertical: 8,
+        textAlign: 'center',
+        alignItems: 'center',
+        fontSize: 70,
+        fontStyle: "Times New Roman",
+        fontWeight: 'bold',
+
+    },
+    inputbox :{
+        
+        borderRadius: 5,
+        padding: 10,
+        borderColor: "#c0c0c0",
+        marginVertical:5,
+        marginBottom:15,
+        shadowColor: '#c0c0c0',
+        shadowOffset: { width: 0, height: 3 },
+        elevation: 3,
+        
+        
+    }
 
     
 

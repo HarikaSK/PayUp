@@ -14,8 +14,8 @@ import { useNavigation } from "expo-router";
 import axios from "axios";
 import Payup from "./Payup";
 import card from "../assets/card.jpg";
-import create from "../assets/create2.jpg";
-import wallet from "../assets/wallet.jpg";
+import create from "../assets/Drawer.png";
+import wallet from "../assets/PayUpLogo1.png";
 import Card from "./Card";
 import Home from "./Home";
 import Loading from "./Loading";
@@ -23,26 +23,48 @@ import styles from "../styles/styles";
 import CreateGroup from "./CreateGroup";
 import Create from "./Create";
 import App from "./App";
-const Index = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+import Login from "./Login"
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+const index = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [myRooms, setMyRooms] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [username, setUsername] = useState("");
   const [refreshing, setRefreshing] = useState(false);
-  const navigation = useNavigation();
-  function createGroup() {
-    navigation.navigate("Create");
-  }
 
-  async function handleRefresh(){
-    setRefreshing(true)
-    await fetcher("drakeswd");
-    // setMyRooms(updatedData);
-    setRefreshing(false);
+
+  const loginFunction = async (uname) => {
+    const userJSON = JSON.stringify({ username: uname, isLoggedIn: true })
+    console.log(userJSON, "loginfunction")
+
+    AsyncStorage.setItem('userData', userJSON)
+      .then(async () => {
+        console.log('User data saved to AsyncStorage');
+        const Data = await AsyncStorage.getItem('userData')
+        console.log(Data, "loginfuncCheck")
+
+        setIsLoggedIn(true)
+        setUsername(uname)
+
+        fetcher(uname).then(() => {
+          setIsLoaded(true);
+        })
+
+      })
+      .catch((error) => {
+        console.error('Error saving user data to AsyncStorage:', error);
+      });
+
+
   }
 
   async function fetcher(name) {
+
     try {
+
+      console.log(name, "in fetcher")
       const response = await fetch(
         "https://payup-043m.onrender.com/fetchRooms",
         {
@@ -60,21 +82,32 @@ const Index = () => {
 
       const data = await response.json().then((res) => {
         setMyRooms(res);
-      }); // Parse the response body as JSO
+        // console.log(res, "rooms")
+      });
     } catch (error) {
-      // Handle any errors that occur during the fetch
       console.error("Error fetching data:", error);
     }
   }
-  useEffect(() => {
-    const name = "drakeswd";
-    fetcher(name).then((temp) => {
-      setIsLoaded(true);
-      setUsername(name);
-    });
-  }, []);
 
-  useEffect(() => {}, []);
+
+  const logoutFunction = async () => {
+    try {
+      await AsyncStorage.removeItem('userData');
+      setUsername('');
+      setIsLoggedIn(false);
+      console.log("logged out")
+    }
+    catch (error) {
+      console.error('Error removing user data from AsyncStorage:', error);
+    }
+  }
+
+  async function handleRefresh() {
+    setRefreshing(true)
+    await fetcher(username);
+    // setMyRooms(updatedData);
+    setRefreshing(false);
+  }
 
   return (
     <SafeAreaView>
@@ -88,7 +121,7 @@ const Index = () => {
               headerStyle: {
                 backgroundColor: "white",
               },
-              headerLeft: () => <Payup img={wallet} />,
+              headerLeft: () => <Payup img={wallet} logoutFunction={logoutFunction} />,
               headerRight: () => (
                 <CreateGroup img={create} username={username} />
               ),
@@ -99,20 +132,20 @@ const Index = () => {
         <View>
           <Stack.Screen
             options={{
-              headerShadowVisible: true,
+              headerShadowVisible: false,
               headerTitle: "",
               headerTintColor: "black",
               headerStyle: {
                 backgroundColor: "white",
               },
-              headerLeft: () => <Payup img={wallet} />,
+              
             }}
           />
         </View>
       )}
 
-      {isLoaded ? (
-        isLoggedIn ? (
+      {isLoggedIn ? (
+        isLoaded ? (
           <Home
             myRooms={myRooms}
             username={username}
@@ -121,25 +154,17 @@ const Index = () => {
             refreshing={refreshing} // A boolean state to track whether refreshing is in progress
           />
         ) : (
-          <View>
-            <Text style={styles.headingText}>Pleaase login first</Text>
-          </View>
+          <Loading />
         )
       ) : (
-        <Loading />
+        <View>
+          <Login loginFunction={loginFunction} />
+        </View>
+
       )}
     </SafeAreaView>
-  );
-};
+  )
 
-// const MyStack = () =>{
-//   return(
-//     <NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen name = "Home"/>
-//         </Stack.Navigator>
-//     </NavigationContainer>
-//   )
-// }
+}
 
-export default Index;
+export default index;

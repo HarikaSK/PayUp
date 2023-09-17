@@ -4,12 +4,15 @@ import styles from '../styles/styles';
 import { useLocalSearchParams } from 'expo-router';
 import Table from "./Table";
 import { ActivityIndicator } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Group = () => {
   const params = useLocalSearchParams();
   const { roomId } = params;
   const [roomDeets, setRoomDeets] = useState({});
   const [isLoaded,setIsLoaded] = useState(false);
+  const [paymentHistory, setPaymentHistory] = useState([])
+  const [username, setUsername] = useState('')
 
   useEffect(() => {
     const fetchRoomDetails = async (rId) => {
@@ -31,16 +34,23 @@ const Group = () => {
         // setIsLoaded(true)
         // Now that the state is updated, you can log it
         // console.log(data.usersData);
-        // console.log(roomDeets)
-
+        let obj = await AsyncStorage.getItem('userData');
+        obj = JSON.parse(obj);
+        setUsername(obj['username']);
+        console.log(username,"grp func username")
+        
         const temp = await data.usersData;
+        const temp_pay = await data.roomHistory;
         setRoomDeets(temp);
+        setPaymentHistory(temp_pay)
+        console.log("this is history in grp")
+        console.log(temp_pay)
         setIsLoaded(true)
         // console.log("this is topay in fetcher")
         // console.log(topay)
       } 
       catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching group data:", error);
       }
     };
 
@@ -53,11 +63,6 @@ const Group = () => {
     // Log roomDeets when it changes
     console.log("this is after setting roomDeets")
     console.log(roomDeets);
-   
-    
-    // const obj = JSON.parse(roomDeets.usersData)
-    
-    // console.log(obj)
     
   }, [roomDeets]);
 
@@ -66,7 +71,7 @@ const Group = () => {
     <View>
        {isLoaded ? (<View style = {styles.containerCenter}>
       {/* <Text style={styles.textWithMargin}>This is the Group page, need to get roomId from Card to this so we can fetch the data of that room Id and display it here</Text> */}
-      <Table details={roomDeets} roomId={roomId}/>
+      <Table details={roomDeets} roomId={roomId} history={paymentHistory} username={username}/>
     </View>) : (<View style = {styles.centerScreen}><ActivityIndicator/></View>)}
     </View>
     
