@@ -12,7 +12,7 @@ const Home = ({ myRooms, username, isLoaded, onRefresh, refreshing }) => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       style = {styles.whiteBackground}
     >
-        <View style = {styles.container}>
+        <View style = {styles.rowContainerSimple}>
           {/* <Text style={styles.textContainer}>Welcome, {username}!</Text> */}
           <TextInput
           placeholder="Search rooms"
@@ -24,7 +24,7 @@ const Home = ({ myRooms, username, isLoaded, onRefresh, refreshing }) => {
           }}
           style={styles.searchRoom}
         ></TextInput>
-        <Image source = {searchRoom} style = {styles.logoStyle}/>
+        <Image source = {searchRoom} style = {styles.searchLogoStyle}/>
         </View>
         {myRooms.length > 0 ? (
           myRooms.map((x, i) => (

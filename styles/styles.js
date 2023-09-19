@@ -9,6 +9,7 @@ const styles = {
         marginRight:"10%",
         marginLeft:"-5%"
     },
+    
     loginlogo: {
         height: 200,
         width:200,
@@ -227,16 +228,36 @@ const styles = {
         flex:1,
         flexDirection:'row'
     },
+    searchRoomContainer:{
+        marginVertical:20,
+        width:400
+    },
+    searchLogoStyle: {
+        height: 35,
+        width: 35,
+        // marginRight:"4%",
+
+    },
     searchRoom: {
-        paddingHorizontal: '20%',
+        paddingHorizontal: 10,
         paddingVertical: 10,
         borderColor: '#ccc',
         borderWidth: 1,
         borderRadius: 7,
-        marginLeft:8,
-        marginRight:"15%",
-        backgroundColor: 'white'
+        width:"88%",
+        backgroundColor: 'white',
+        
+        // borderColor:"black"
     },
+    rowContainerSimple:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginVertical:10,
+        // borderWidth:1,
+        paddingHorizontal:"7%",
+        // borderColor:"black"
+      },
     theBetterSearchBar:{
     margin:10,
     },
@@ -361,6 +382,7 @@ const styles = {
         borderColor: '#f0f0f0',
         paddingVertical: 8,
       },
+      
       row: {
         flex: 1,
       },

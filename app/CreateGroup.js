@@ -32,7 +32,7 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
   }
 
   return (
-    <View>
+    <View style={{marginRight:"7%"}}>
       <TouchableOpacity onPress={() => setModalVisible(true)}><Image  source={img} resizeMode="cover" style={styles.drawerStyle}/></TouchableOpacity>
       <Modal
         // animationType="slide" // You can use 'slide', 'fade', or 'none'
