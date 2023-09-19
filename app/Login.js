@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Link, Modal} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View,Image, Text, TextInput, Link, Modal} from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "expo-router";
+import wallet from "../assets/PayUpLogo1.png";
 
 const Login = ({loginFunction}) => {
     const [username, setUsername] = useState('')
@@ -105,10 +106,11 @@ const Login = ({loginFunction}) => {
 
     return (
         <View style={styles.containerCenter2}>
+            <View style = {styles.centerRow}><Image source={wallet} style={styles.loginlogo}/></View>
             {registered == true ?
                 (
                     <View>
-                        <View><Text style={{textAlign:"center", color:"#00008b", fontWeight:"bold", fontSize:30}}>Welcome back!</Text></View>
+                        <View><Text style={{textAlign:"center", color:"#00008b", fontWeight:"bold", fontSize:30, marginTop:"-5%"}}>Welcome back!</Text></View>
                         <View style={styles.containerBox}>
 
                             <Text> Username:</Text>
@@ -155,7 +157,7 @@ const Login = ({loginFunction}) => {
                 ) :
                 (<View>
                     <View>
-                        <View><Text style={{textAlign:"center", color:"#00008b", fontWeight:"bold", fontSize:30}}>Sign up!</Text></View>
+                        <View><Text style={{textAlign:"center", color:"#00008b", fontWeight:"bold", fontSize:30, marginTop:"-5%"}}>Sign up!</Text></View>
                         <View style={styles.containerBox}>
                          
                             <Text> Username:</Text>

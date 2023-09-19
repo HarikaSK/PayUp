@@ -1,11 +1,11 @@
 import {View,Text, Image,TouchableOpacity} from 'react-native';
 import styles from '../styles/styles';
 import { useNavigation } from 'expo-router';
-const Payup = ({img, logoutFunction}) => {
+const Payup = ({img}) => {
   const navigation = useNavigation();
   function creditsPage(){
-    // navigation.navigate("Credits");
-    logoutFunction();
+    navigation.navigate("Credits");
+    
   }
   return (
     <TouchableOpacity onPress = {creditsPage}>

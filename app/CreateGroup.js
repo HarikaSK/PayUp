@@ -4,7 +4,7 @@ import {
   Image,
   TouchableOpacity,
   Dropdown,
-  Modal,
+ 
   Button,
 } from "react-native";
 import { useState } from "react";
@@ -12,12 +12,15 @@ import SelectDropdown from "react-native-select-dropdown";
 import { Link } from "expo-router";
 import styles from "../styles/styles";
 import { useNavigation } from "expo-router";
-import Login from "./index"
+import Modal from 'react-native-modal'
+import { SafeAreaView } from "react-native-safe-area-context";
+import { SlideInDown, SlideInLeft, SlideInRight, SlideOutRight, SlideOutUp } from "react-native-reanimated";
+
 // import SideDrawer from './SideDrawer'
 
 
 
-const CreateGroup = ({ img, username }) => {
+const CreateGroup = ({ img, username, logoutFunction }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const data = ["Create Group", "Join Group"];
@@ -32,32 +35,41 @@ const CreateGroup = ({ img, username }) => {
     <View>
       <TouchableOpacity onPress={() => setModalVisible(true)}><Image  source={img} resizeMode="cover" style={styles.drawerStyle}/></TouchableOpacity>
       <Modal
-        animationType="fade" // You can use 'slide', 'fade', or 'none'
+        // animationType="slide" // You can use 'slide', 'fade', or 'none'
         transparent={true}
-        visible={modalVisible}
+        isVisible={modalVisible}
+        animationIn={'slideInRight'}
+        animationOut={'slideOutRight'}
         onRequestClose={() => {
           setModalVisible(false);
         }}
+        style={{marginLeft:"35%", marginBottom:"140%", marginTop:"13%"}}
       >
-        <View style={styles.modalContainer}>
+        <View style={styles.sideDrawContainer}>
           <View style={styles.modalContent}>
+            <Text style={{ color: "#4682b4", fontWeight: "bold", alignItems: "center" }}>Welcome, {username}</Text>
+          <View style={styles.breakSpace2}></View>
             <Link
               onPress={()=>{setModalVisible(false)}}
               href={{
                 pathname: "/Create",
                 params: { username: username },
               }}
-              style = {styles.greenContainerBox}
-            ><Text style={{ color: "white", fontWeight: "bold", alignItems: "center" }}>CREATE GROUP</Text></Link>
-              <Text style = {{margin:5}}>(or)</Text>
+              // style = {styles.greenContainerBox}
+            ><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>CREATE GROUP</Text></Link>
+            <View style={styles.breakSpace2}></View>
             <Link
               onPress={()=>{setModalVisible(false)}} 
               href={{
                 pathname: "/Join",
                 params: { username: username },
               }}
-              style = {styles.blueContainerBox}
-            ><Text style={{ color: "white", fontWeight: "bold", alignItems: "center" }}>JOIN GROUP</Text></Link>
+              // style = {styles.blueContainerBox}
+            ><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>JOIN GROUP</Text></Link>
+            
+            <View style={styles.breakSpace2}></View>
+            <TouchableOpacity onPress={()=>{setModalVisible(false);  logoutFunction(); }}><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>LOG OUT</Text></TouchableOpacity>
+
           </View>
         </View>
       </Modal>

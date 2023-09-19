@@ -1,8 +1,11 @@
-import React from "react";
-import { View, Text, ScrollView , RefreshControl} from "react-native";
+import React, { useState } from "react";
+import { View, Text, ScrollView , RefreshControl, Image, TouchableOpacity, TextInput} from "react-native";
 import styles from "../styles/styles";
 import Card from "./Card";
+import searchRoom from "../assets/Search.png";
+
 const Home = ({ myRooms, username, isLoaded, onRefresh, refreshing }) => {
+  const [search, setSearch] = useState()
   return (
     <View>
       <ScrollView
@@ -10,7 +13,18 @@ const Home = ({ myRooms, username, isLoaded, onRefresh, refreshing }) => {
       style = {styles.whiteBackground}
     >
         <View style = {styles.container}>
-          <Text style={styles.textContainer}>Welcome, {username}!</Text>
+          {/* <Text style={styles.textContainer}>Welcome, {username}!</Text> */}
+          <TextInput
+          placeholder="Search rooms"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={search}
+          onChangeText={(q) => {
+            setSearch(q);
+          }}
+          style={styles.searchRoom}
+        ></TextInput>
+        <Image source = {searchRoom} style = {styles.logoStyle}/>
         </View>
         {myRooms.length > 0 ? (
           myRooms.map((x, i) => (
@@ -20,6 +34,7 @@ const Home = ({ myRooms, username, isLoaded, onRefresh, refreshing }) => {
               roomName={x.roomName}
               roomUsers={x.roomUsers}
             />
+            
           ))
         ) : (
           <View></View>

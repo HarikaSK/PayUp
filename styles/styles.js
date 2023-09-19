@@ -1,8 +1,20 @@
+import { Dimensions } from 'react-native'
+
+let ScreenHeight = Dimensions.get("window").height;
+
 const styles = {
     logoStyle: {
         height: 42,
-        width: 42
+        width: 42,
+        marginRight:"10%",
+        marginLeft:"-5%"
     },
+    loginlogo: {
+        height: 200,
+        width:200,
+        justifyContent:"center",        
+    },
+    
     drawerStyle:{
         height : 30,
         width: 30
@@ -38,12 +50,18 @@ const styles = {
     },
     containerCenter2: {
         
-        paddingVertical: 175,
+        // paddingVertical: 175,
         textAlign: 'center',
         fontSize: 70,
         fontStyle: "Times New Roman",
         fontWeight: 'bold',
-        backgroundColor:"white"
+        backgroundColor:"white",
+        
+        // borderWidth:1,
+        // borderColor:"black",
+    //    paddingBottom:"10%"
+    height: ScreenHeight
+
         
     },
     textContainer: {
@@ -71,6 +89,9 @@ const styles = {
         fontStyle: 'italic',
         alignItems: 'center',
         color: '#57595B'
+    },
+    centerRow:{
+        alignItems: 'center',
     },
     headingText: {
         color: '#2B3942',
@@ -202,6 +223,20 @@ const styles = {
         marginTop: 10,
         backgroundColor: 'white'
     },
+    searchContainer:{
+        flex:1,
+        flexDirection:'row'
+    },
+    searchRoom: {
+        paddingHorizontal: '20%',
+        paddingVertical: 10,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 7,
+        marginLeft:8,
+        marginRight:"15%",
+        backgroundColor: 'white'
+    },
     theBetterSearchBar:{
     margin:10,
     },
@@ -232,12 +267,32 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        
+      },
+      sideDrawContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        marginLeft: "10%",
+        marginRight: "-20%",
+        marginTop:" -15%",
+        shadowColor: 'black',
+        shadowOffset: {width: -2, height: 4},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation:20
+        
+        
       },
       modalContent: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        paddingTop: 20,
+        paddingLeft:10,
+        borderRadius: 5,
+        height:"325%",
+        marginTop:"229%",
+        marginRight:"12%",
+        marginLeft:"20%",
+        
       },
       modalCenter:{
         flex: 1,
@@ -383,7 +438,7 @@ const styles = {
         marginBottom:15,
         shadowColor: '#c0c0c0',
         shadowOffset: { width: 0, height: 3 },
-        elevation: 3,
+        elevation: 1,
         
         
     }

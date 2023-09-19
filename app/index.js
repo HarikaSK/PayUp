@@ -27,12 +27,14 @@ import Login from "./Login"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const index = () => {
+const Index = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [myRooms, setMyRooms] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [username, setUsername] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const [show,setShow] = useState(false);
+  
 
 
   const loginFunction = async (uname) => {
@@ -92,15 +94,29 @@ const index = () => {
 
   const logoutFunction = async () => {
     try {
-      await AsyncStorage.removeItem('userData');
-      setUsername('');
-      setIsLoggedIn(false);
-      console.log("logged out")
+      await AsyncStorage.removeItem('userData')
+      clearStates();
+            
     }
     catch (error) {
       console.error('Error removing user data from AsyncStorage:', error);
     }
   }
+
+  const clearStates = async () =>{
+        setUsername('')
+        setIsLoggedIn(false);
+        setIsLoaded(false);
+        
+
+  }
+  
+
+  useEffect(()=>{
+    console.log("logged out")
+    console.log(username, "in logoutfunc")
+    console.log(isLoggedIn,"in logoutfunction")
+  },[username, isLoggedIn])
 
   async function handleRefresh() {
     setRefreshing(true)
@@ -110,6 +126,7 @@ const index = () => {
   }
 
   return (
+    <ScrollView>
     <SafeAreaView>
       {isLoggedIn ? (
         <View>
@@ -121,10 +138,8 @@ const index = () => {
               headerStyle: {
                 backgroundColor: "white",
               },
-              headerLeft: () => <Payup img={wallet} logoutFunction={logoutFunction} />,
-              headerRight: () => (
-                <CreateGroup img={create} username={username} />
-              ),
+              headerLeft: () => <Payup img={wallet}  />,
+              headerRight: () => ( <CreateGroup img={create} username={username} logoutFunction={logoutFunction} />),
             }}
           />
         </View>
@@ -133,12 +148,11 @@ const index = () => {
           <Stack.Screen
             options={{
               headerShadowVisible: false,
-              headerTitle: "",
-              headerTintColor: "black",
+              headerTitle: "PayUp",
+              headerTintColor: "#000080",
               headerStyle: {
                 backgroundColor: "white",
               },
-              
             }}
           />
         </View>
@@ -163,8 +177,9 @@ const index = () => {
 
       )}
     </SafeAreaView>
+    </ScrollView>
   )
 
 }
 
-export default index;
+export default Index;

@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text} from 'react-native';
+import {View,Text, TouchableOpacity} from 'react-native';
 import styles from '../styles/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -19,7 +19,7 @@ const Credits = ({route}) => {
 
   return (
     <View style = {styles.containerCenter}>
-        <TouchableOpacity style={styles.ackBlueButton} onClick = {()=>{handleLogout()}}>Logout</TouchableOpacity>
+        
         <Text style = {styles.headingText}>Enjoying PayUp? Leave a review!</Text>
         <Text >Developed by Nikhil Agastya, Manasa Adusumilli, Harika Kopalle & Pranav Dhulipala</Text>
     </View>

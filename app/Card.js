@@ -31,11 +31,14 @@ const Card = ({roomId,roomName,roomUsers}) => {
     //           </Text>
     // </TouchableOpacity>
     <View style = {styles.containerBox}>
-      <Text style={{marginLeft:8, fontSize:16, fontWeight:'bold'}}>{roomName}</Text>
+      
       <Link style = {{marginLeft:8}} href = {{pathname:"/Group", params: {roomId:roomId}}}>
-        <Text style={{}}>
+      <View>
+      <Text style={{marginLeft:8,  fontSize:16, fontWeight:'bold'}}>{roomName}</Text>
+        <Text style={{marginLeft:8}}>
           {userList}
         </Text>
+      </View>
       </Link>
       </View>
    
