@@ -283,6 +283,18 @@ const styles = {
     dropdown:{
         color: "#bb233d"
     },
+    payupModalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      payupModalContent: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+      },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',

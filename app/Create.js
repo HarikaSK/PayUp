@@ -254,8 +254,8 @@ const Create = ({ route }) => {
           setOutputText("Please wait...");
         }}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+        <View style={styles.payupModalContainer}>
+          <View style={styles.payupModalContent}>
             <Text>{outputText}</Text>
             {successMessage ? (
               <View style={{ flexDirection: "row" }}>

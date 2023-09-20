@@ -127,7 +127,7 @@ const Login = ({loginFunction}) => {
 
                             <Text> Password:</Text>
                             <TextInput
-                                placeholder="Enter Username"
+                                placeholder="Enter Password"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 onChangeText={(e) => {
@@ -174,7 +174,7 @@ const Login = ({loginFunction}) => {
                             
                             <Text> Password:</Text>
                             <TextInput
-                                placeholder="Enter Username"
+                                placeholder="Enter Password"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 onChangeText={(e) => {
