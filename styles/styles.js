@@ -1,6 +1,7 @@
 import { Dimensions } from 'react-native'
 
 let ScreenHeight = Dimensions.get("window").height;
+//use - height: ScreenHeight
 
 const styles = {
     logoStyle: {
@@ -290,17 +291,28 @@ const styles = {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         
       },
+      sideDrawBackground: {
+        marginLeft:"35%",
+        // marginBottom:"140%",
+        // marginTop:"13%",
+        marginLeft:"50%",
+        height: ScreenHeight,
+        borderWidth:1,
+        borderColor:"black"
+      },
       sideDrawContainer: {
         flex: 1,
         justifyContent: 'center',
-        marginLeft: "10%",
+        // marginLeft: "10%",
         marginRight: "-20%",
         marginTop:" -15%",
         shadowColor: 'black',
         shadowOffset: {width: -2, height: 4},
         shadowOpacity: 0.2,
         shadowRadius: 3,
-        elevation:20
+        elevation:20,
+        borderWidth:1,
+        borderColor:"blue"
         
         
       },
@@ -310,10 +322,24 @@ const styles = {
         paddingLeft:10,
         borderRadius: 5,
         height:"325%",
-        marginTop:"229%",
-        marginRight:"12%",
-        marginLeft:"20%",
+        // marginTop:"229%",
+        // marginRight:"12%",
+        // marginLeft:"20%",
+        borderWidth:1,
+        borderColor:"red"
         
+      },
+      payupModalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      payupModalContent: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10, 
+        alignItems: 'center',
       },
       modalCenter:{
         flex: 1,

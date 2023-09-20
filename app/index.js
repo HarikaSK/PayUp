@@ -111,9 +111,8 @@ const Index = () => {
 
   }
   
-
   useEffect(()=>{
-    console.log("logged out")
+    
     console.log(username, "in logoutfunc")
     console.log(isLoggedIn,"in logoutfunction")
   },[username, isLoggedIn])

@@ -118,10 +118,10 @@ const Table = ({ details, roomId, history, username }) => {
         <ScrollView>
             <View style={styles.containerBox}>
                 <Text> Split expense:</Text>
-                <TextInput placeholder="Enter Split Amount" autoCapitalize="none" autoCorrect={false} onChangeText={(e) => {setAmount(e);}} value={amount} style={styles.theBetterSearchBar}></TextInput>
+                <TextInput placeholder="Enter Split Amount" autoCapitalize="none" keyboardType='numeric' autoCorrect={false} onChangeText={(e) => {setAmount(e);}} value={amount} style={styles.theBetterSearchBar}></TextInput>
                 
                 <Text> Description of Expense:</Text>
-                <TextInput placeholder="Enter Notes" autoCapitalize="none" autoCorrect={false} onChangeText={(e) => {setNotes(e);}} value={notes} style={styles.theBetterSearchBar}></TextInput>
+                <TextInput placeholder="Enter Notes" autoCapitalize="none" autoCorrect={false}  onChangeText={(e) => {setNotes(e);}} value={notes} style={styles.theBetterSearchBar}></TextInput>
                 
                 <TouchableOpacity style={styles.greenButton} onPress={()=>{Split()}}>
                     <Text style={{ color: "white", fontWeight: "bold", alignItems: "center" }}> 
@@ -138,8 +138,8 @@ const Table = ({ details, roomId, history, username }) => {
           setModalVisible(false);
         }}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+        <View style={styles.payupModalContainer}>
+          <View style={styles.payupModalContent}>
           <Text> Enter Amount:</Text>
           <TextInput placeholder="Enter Amount" keyboardType="numeric" onChangeText={(e) => {console.log("pay= "+e); setPay(e);}} value={pay} style={styles.theBetterSearchBar}></TextInput>
           <TouchableOpacity style={styles.wideGreenButton} onPress={()=>{PayUp(); setModalVisible(false)}}><Text>PayUp!</Text></TouchableOpacity>

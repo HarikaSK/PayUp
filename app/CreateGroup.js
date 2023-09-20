@@ -21,6 +21,7 @@ import { SlideInDown, SlideInLeft, SlideInRight, SlideOutRight, SlideOutUp } fro
 
 
 const CreateGroup = ({ img, username, logoutFunction }) => {
+
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const data = ["Create Group", "Join Group"];
@@ -43,7 +44,7 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
         onRequestClose={() => {
           setModalVisible(false);
         }}
-        style={{marginLeft:"35%", marginBottom:"140%", marginTop:"13%"}}
+        style={styles.sideDrawBackground}
       >
         <View style={styles.sideDrawContainer}>
           <View style={styles.modalContent}>
