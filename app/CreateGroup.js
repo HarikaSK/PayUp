@@ -66,6 +66,15 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
               }}
               // style = {styles.blueContainerBox}
             ><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>JOIN GROUP</Text></Link>
+            <View style={styles.breakSpace2}></View>
+            <Link
+              onPress={()=>{setModalVisible(false)}} 
+              href={{
+                pathname: "/Notifications",
+                params: { username: username },
+              }}
+              // style = {styles.blueContainerBox}
+            ><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>NOTIFICATIONS</Text></Link>
             
             <View style={styles.breakSpace2}></View>
             <TouchableOpacity onPress={()=>{setModalVisible(false);  logoutFunction(); }}><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>LOG OUT</Text></TouchableOpacity>
