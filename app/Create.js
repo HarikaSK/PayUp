@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Stack, useNavigation } from "expo-router";
+import { LogBox } from 'react-native';
 import {
   View,
   Text,
@@ -8,15 +9,24 @@ import {
   SafeAreaView,
   TextInput,
   FlatList,
+  AlertIOS,
+  ToastAndroid, 
   ScrollView,
+  Clipboard,
+  Platform,
   Modal,
   TouchableOpacity,
 } from "react-native";
+// import Clipboard from '@react-native-clipboard/clipboard';
+
+
 import { useLocalSearchParams } from "expo-router";
 // import filter from 'lodash.filter'
 import styles from "../styles/styles";
 
+
 const Create = ({ route }) => {
+  LogBox.ignoreAllLogs();
   const navigation = useNavigation();
   const [output, setOutput] = useState(true);
   const [outputText, setOutputText] = useState("Please wait...");
@@ -29,6 +39,7 @@ const Create = ({ route }) => {
   const [groupName, setGroupName] = useState("");
   const [username, setUsername] = useState("");
   const params = useLocalSearchParams();
+  const [roomId, setRoomId] = useState();
   useEffect(() => {
     fetchUsers().then(() => {
       setIsLoaded(true);
@@ -54,6 +65,7 @@ const Create = ({ route }) => {
 
   // Generate a unique ID
   const uniqueId = generateUniqueId();
+  
   console.log(uniqueId);
 
   async function createGroupFunction() {
@@ -93,6 +105,7 @@ const Create = ({ route }) => {
       // Handle any errors that occur during the fetch
       console.error("Error fetching data:", error);
     }
+    setRoomId(uniqueId);
     console.log(groupmem);
     // navigation.navigate("index");
   }
@@ -141,6 +154,25 @@ const Create = ({ route }) => {
       setList([]);
     }
   };
+
+  const copyToClipboard = () => {
+    try {
+      Clipboard.setString(""+roomId);
+      // Display a success message
+      if (Platform.OS === 'android') {
+        ToastAndroid.show('Text copied to clipboard!',
+          ToastAndroid.SHORT);
+      } else if (Platform.OS === 'ios') {
+        AlertIOS.alert('Text copied to clipboard!');
+      }
+    } catch (error) {
+      // Handle the error in a way that suits your application
+      // For example, you can display an error message to the user
+      // or simply ignore the error if it's not critical.
+      // Example: ToastAndroid.show('Error copying to clipboard', ToastAndroid.SHORT);
+    }
+  }
+  
 
   useEffect(() => {
     //  setGroupmem(selectedNames);
@@ -220,7 +252,7 @@ const Create = ({ route }) => {
                       removeName(x);
                     }}
                   >
-                    <Text style={styles.removeText}>Remove</Text>
+                    {x==username?(<View><Text>Admin</Text></View>):(<Text style={styles.removeText}>Remove</Text>)}
                   </TouchableOpacity>
                 </View>
               </View>
@@ -259,7 +291,7 @@ const Create = ({ route }) => {
             <Text>{outputText}</Text>
             {successMessage ? (
               <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity style = {styles.smallButtons}><Text style = {{ color: "white", fontWeight: "bold", alignItems: "center" }}>Copy ID</Text></TouchableOpacity>
+                <TouchableOpacity style = {styles.smallButtons} onPress = {()=>{copyToClipboard()}}><Text style = {{ color: "white", fontWeight: "bold", alignItems: "center" }}>Copy ID</Text></TouchableOpacity>
                 <TouchableOpacity
                   style={styles.smallButtons}
                   onPress={() => {
