@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text , TouchableOpacity, ToastAndroid,LogBox, AlertIOS, Platform, Clipboard} from 'react-native';
 import styles from '../styles/styles';
 import { useLocalSearchParams } from 'expo-router';
 import Table from "./Table";
@@ -9,10 +9,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Group = () => {
   const params = useLocalSearchParams();
   const { roomId } = params;
+
   const [roomDeets, setRoomDeets] = useState({});
   const [isLoaded,setIsLoaded] = useState(false);
   const [paymentHistory, setPaymentHistory] = useState([])
   const [username, setUsername] = useState('')
+  const [fullData, setFullData] = useState({});
 
   useEffect(() => {
     const fetchRoomDetails = async (rId) => {
@@ -30,6 +32,7 @@ const Group = () => {
         }
 
         const data = await response.json();
+        setFullData(data);
         // setRoomDeets(data); // Update the state
         // setIsLoaded(true)
         // Now that the state is updated, you can log it
@@ -38,7 +41,7 @@ const Group = () => {
         obj = JSON.parse(obj);
         setUsername(obj['username']);
         console.log(username,"grp func username")
-        
+        console.log(data);
         const temp = await data.usersData;
         const temp_pay = await data.roomHistory;
         setRoomDeets(temp);
@@ -58,6 +61,21 @@ const Group = () => {
     fetchRoomDetails(roomId);
     
   }, []);
+  LogBox.ignoreAllLogs();
+
+  const copyToClipboard = () => {
+    if (fullData.roomId) {
+        Clipboard.setString(""+fullData.roomId);
+
+        // Display a success message
+        if (Platform.OS === 'android') {
+            ToastAndroid.show('Text copied to clipboard!',
+                ToastAndroid.SHORT);
+        } else if (Platform.OS === 'ios') {
+            AlertIOS.alert('Text copied to clipboard!');
+        }
+    }
+};
 
   useEffect(() => {
     // Log roomDeets when it changes
@@ -70,7 +88,10 @@ const Group = () => {
   return (
     <View>
        {isLoaded ? (<View style = {styles.containerCenter}>
-      {/* <Text style={styles.textWithMargin}>This is the Group page, need to get roomId from Card to this so we can fetch the data of that room Id and display it here</Text> */}
+        <View style = {styles.containerBox}>
+      <Text style={{color:"#000080", fontWeight:'bold', textAlign:'center', fontSize:20, marginBottom:5 }}>{fullData.roomName}</Text>
+      <TouchableOpacity onPress = {() => {copyToClipboard()}}><Text style={{color:"black", fontWeight:'bold', textAlign:'center', fontSize:13, marginBottom:5}}>{fullData.roomId}</Text><Text style = {{textAlign:'center', fontSize:10}}>(Copy)</Text></TouchableOpacity>
+      </View>
       <Table details={roomDeets} roomId={roomId} history={paymentHistory} username={username}/>
     </View>) : (<View style = {styles.centerScreen}><ActivityIndicator/></View>)}
     </View>
