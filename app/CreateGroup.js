@@ -21,7 +21,6 @@ import { SlideInDown, SlideInLeft, SlideInRight, SlideOutRight, SlideOutUp } fro
 
 
 const CreateGroup = ({ img, username, logoutFunction }) => {
-
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const data = ["Create Group", "Join Group"];
@@ -33,7 +32,7 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
   }
 
   return (
-    <View style={{marginRight:"7%"}}>
+    <View>
       <TouchableOpacity onPress={() => setModalVisible(true)}><Image  source={img} resizeMode="cover" style={styles.drawerStyle}/></TouchableOpacity>
       <Modal
         // animationType="slide" // You can use 'slide', 'fade', or 'none'
@@ -44,9 +43,8 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
         onRequestClose={() => {
           setModalVisible(false);
         }}
-        style={styles.sideDrawBackground}
       >
-        <View style={styles.sideDrawContainer}>
+        <View>
           <View style={styles.modalContent}>
             <Text style={{ color: "#4682b4", fontWeight: "bold", alignItems: "center" }}>Welcome, {username}</Text>
           <View style={styles.breakSpace2}></View>
@@ -56,7 +54,7 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
                 pathname: "/Create",
                 params: { username: username },
               }}
-              // style = {styles.greenContainerBox}
+              
             ><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>CREATE GROUP</Text></Link>
             <View style={styles.breakSpace2}></View>
             <Link
@@ -67,6 +65,15 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
               }}
               // style = {styles.blueContainerBox}
             ><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>JOIN GROUP</Text></Link>
+            <View style={styles.breakSpace2}></View>
+            <Link
+              onPress={()=>{setModalVisible(false)}} 
+              href={{
+                pathname: "/Notifications",
+                params: { username: username },
+              }}
+              // style = {styles.blueContainerBox}
+            ><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>NOTIFICATIONS</Text></Link>
             
             <View style={styles.breakSpace2}></View>
             <TouchableOpacity onPress={()=>{setModalVisible(false);  logoutFunction(); }}><Text style={{ color: "#000080", fontWeight: "bold", alignItems: "center" }}>LOG OUT</Text></TouchableOpacity>
@@ -101,5 +108,4 @@ const CreateGroup = ({ img, username, logoutFunction }) => {
 
 
 export default CreateGroup;
-
 

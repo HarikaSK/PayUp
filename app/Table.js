@@ -11,13 +11,14 @@ const Table = ({ details, roomId, history, username }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [toPayList, setToPayList] = useState({}); // Initialize toPayList as a state variable
     const [toBePaidList, setToBePaidList] = useState({});
-    var [amount, setAmount] = useState(0);
-    const [notes,setNotes] = useState("");
+    var [amount, setAmount] = useState();
+    const [notes,setNotes] = useState();
     const [modalVisible, setModalVisible] = useState(false)
-    var [pay, setPay] = useState(0);
+    var [pay, setPay] = useState();
     const [receiver, setReceiver] = useState("")
     const [listModalVisible,setListModalVisible] = useState(false)
     const [paymentHistory,setPaymentHistory] = useState([])
+    const [desc,setDesc] = useState("");
     
 
     useEffect(() => {
@@ -57,6 +58,7 @@ const Table = ({ details, roomId, history, username }) => {
               sender: username,
               receiver: receiver ,
               amount: pay,
+              description:desc
               
             }), // Convert the body to JSON format using JSON.stringify
           });
@@ -142,6 +144,8 @@ const Table = ({ details, roomId, history, username }) => {
           <View style={styles.payupModalContent}>
           <Text> Enter Amount:</Text>
           <TextInput placeholder="Enter Amount" keyboardType="numeric" onChangeText={(e) => {console.log("pay= "+e); setPay(e);}} value={pay} style={styles.theBetterSearchBar}></TextInput>
+          <Text> Enter Notes:</Text>
+          <TextInput placeholder="Enter Notes" onChangeText={(e) => {console.log("pay= "+e); setDesc(e);}} value={desc} style={styles.theBetterSearchBar}></TextInput>
           <TouchableOpacity style={styles.wideGreenButton} onPress={()=>{PayUp(); setModalVisible(false)}}><Text>PayUp!</Text></TouchableOpacity>
           </View>
         </View>
